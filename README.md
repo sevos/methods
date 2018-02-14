@@ -1,8 +1,15 @@
 # Methods
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/methods`. To experiment with that code, run `bin/console` for an interactive prompt.
+This gem aims at making referencing methods in the Ruby language easier. It is greatly inspired by [this issue on the Ruby bug tracker](https://bugs.ruby-lang.org/issues/13581).
 
-TODO: Delete this and the text above, and describe your gem
+It allows you to grab a reference to a method by simply calling `method` on an object and calling the method you want on the result
+
+```
+irb(main):006:0> Math.method.sqrt
+=> #<Method: Math.sqrt>
+```
+
+It allows parameters currying and respects method's visibility.
 
 ## Installation
 
@@ -22,7 +29,48 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+### Getting a reference
+
+```
+irb(main):006:0> Math.method.sqrt
+=> #<Method: Math.sqrt>
+```
+
+### Passing a reference to an enumerator method
+
+```
+[4, 9, 16].map(&Math.method.sqrt).map(&:to_i).each(&method.puts)
+2
+3
+4
+=> [2, 3, 4]
+```
+
+### Argument currying
+
+Yiu can curry any number of arguments in front of the argument list
+
+```
+[4, 9].map(&Math.method.sqrt).map(&:to_i).each(&method.puts("foo", "bar"))
+foo
+bar
+2
+foo
+bar
+3
+=> [2, 3]
+```
+
+Also, currying keyword arguments works
+
+```
+irb(main):011:0> def adder(a, b, c:)
+irb(main):012:1> a + b + c
+irb(main):013:1> end
+=> :adder
+irb(main):014:0> [1,2,3].map(&method.adder(1, c: 5))
+=> [7, 8, 9]
+```
 
 ## Development
 
@@ -34,6 +82,9 @@ To install this gem onto your local machine, run `bundle exec rake install`. To 
 
 Bug reports and pull requests are welcome on GitHub at https://github.com/sevos/methods. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [Contributor Covenant](http://contributor-covenant.org) code of conduct.
 
+## Acknowledgments
+
+Many thanks to [Beni Cherniavsky-Paskin](https://github.com/cben) for the inspiration of the syntax!
 
 ## License
 
