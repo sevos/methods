@@ -16,7 +16,7 @@ module Methods
           if merged_kwargs.empty?
             method.call(*args, *call_args)
           else
-            method.call(*args, *call_args, **kwargs)
+            method.call(*args, *call_args, **merged_kwargs)
           end
         end
       end

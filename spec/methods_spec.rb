@@ -47,6 +47,12 @@ RSpec.describe Methods do
     expect([4, 9, 16].map(&LocalMath.method.multiply(b: 3))).to eq([12, 27, 48])
   end
 
+  it 'the carried keyword arguments can be overriden' do
+    method = LocalMath.method.multiply(5, b: 3)
+    expect(method.call).to eq(15)
+    expect(method.call(b: 2)).to eq(10)
+  end
+
   it 'allows to access local variables even when carrying' do
     expect(Circle.new.perimeter(3)).to be > 18
   end
