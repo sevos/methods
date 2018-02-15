@@ -1,8 +1,9 @@
 # Methods
 
-This gem aims at making referencing methods in the Ruby language easier. It is greatly inspired by [this issue on the Ruby bug tracker](https://bugs.ruby-lang.org/issues/13581).
+[![Gem Version](https://badge.fury.io/rb/methods.svg)](https://badge.fury.io/rb/methods)
+![circleci](https://circleci.com/gh/sevos/methods.svg?style=shield&circle-token=:circle-token)
 
-It allows you to grab a reference to a method by simply calling `method` on an object and calling the method you want on the result
+This gem aims at making referencing methods in the Ruby language easier. It is greatly inspired by [this issue on the Ruby bug tracker](https://bugs.ruby-lang.org/issues/13581). It allows you to grab a reference to a method by simply calling `method` on an object and calling the method you want on the result
 
 ```
 irb(main):006:0> Math.method.sqrt
