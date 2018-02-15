@@ -4,19 +4,20 @@ module Methods
       @obj = obj
     end
 
-    def method_missing(method, *args, **kwargs)
+    def method_missing(method, *args, **kwargs, &block)
       __raise_no_method_error(method) unless respond_to?(method)
       method = @obj.method(method)
 
-      if args.empty? && kwargs.empty?
+      if args.empty? && kwargs.empty? && block.nil?
         method
       else
-        ::Kernel.lambda do |*call_args, **call_kwargs|
+        ::Kernel.lambda do |*call_args, **call_kwargs, &call_block|
           merged_kwargs = kwargs.merge(**call_kwargs)
+          merged_block = call_block || block
           if merged_kwargs.empty?
-            method.call(*args, *call_args)
+            method.call(*args, *call_args, &merged_block)
           else
-            method.call(*args, *call_args, **merged_kwargs)
+            method.call(*args, *call_args, **merged_kwargs, &merged_block)
           end
         end
       end

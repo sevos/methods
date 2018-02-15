@@ -73,6 +73,23 @@ irb(main):014:0> [1,2,3].map(&method.adder(1, c: 5))
 => [7, 8, 9]
 ```
 
+Block currying
+
+```
+irb(main):001:0> def add_to_block(a)
+irb(main):002:1> a + yield
+irb(main):003:1> end
+=> :add_to_block
+irb(main):004:0> add_two = method.add_to_block { 2 }
+=> #<Proc:0x007f91a8013290@/Users/sevos/Projects/methods/lib/methods/methods_wrapper.rb:14 (lambda)>
+irb(main):005:0> [1,2,3].map(&add_two)
+=> [3, 4, 5]
+irb(main):006:0> add_two.call(3) { 5 }
+=> 8
+irb(main):007:0> add_two.call(3)
+=> 5
+```
+
 ## Development
 
 After checking out the repo, run `bin/setup` to install dependencies. Then, run `rake spec` to run the tests. You can also run `bin/console` for an interactive prompt that will allow you to experiment.

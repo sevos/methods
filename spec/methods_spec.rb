@@ -11,6 +11,10 @@ RSpec.describe Methods do
     def multiply(a, b:)
       a * b
     end
+
+    def multiply_block(a, b)
+      a * yield(b)
+    end
   end
 
   class Circle
@@ -59,5 +63,11 @@ RSpec.describe Methods do
 
   it 'does not allow to access private methods from outside' do
     expect { Circle.new.method.calculate }.to raise_error(NoMethodError)
+  end
+
+  it 'allows block currying and block overrides' do
+    m = LocalMath.method.multiply_block(2) { |x| x + 1 }
+    expect(m.call(4)).to eq(10)
+    expect(m.call(4) { |x| x - 1}).to eq(6)
   end
 end
