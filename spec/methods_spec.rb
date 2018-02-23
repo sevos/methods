@@ -70,4 +70,11 @@ RSpec.describe Methods do
     expect(m.call(4)).to eq(10)
     expect(m.call(4) { |x| x - 1}).to eq(6)
   end
+
+  it 'allows to get instance method' do
+    unbound_method = Circle.instance_method.perimeter
+    expect(
+      unbound_method.bind(Circle.new).call(3)
+    ).to be > 18
+  end
 end
