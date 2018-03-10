@@ -16,7 +16,7 @@ module Methods
 
     def method(*args)
       if args.empty?
-        Methods::MethodsWrapper.new(self)
+        Methods::MethodsWrapper.new(self, Methods.configuration)
       else
         super
       end
